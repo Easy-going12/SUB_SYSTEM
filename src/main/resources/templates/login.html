@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>경운대학교 로그인</title>
+    <link rel="stylesheet" href="/login/login.css">
+</head>
+<body>
+
+<div class="login-container">
+    <!-- ✅ 텍스트 대신 로고 이미지 삽입 -->
+    <div class="logo-box">
+        <img src="/images/kyungwoon_logo.png" alt="경운대학교 로고">
+    </div>
+
+    <form class="login-form" th:action="@{/login}" method="post">
+        <label for="userId">학번/교번</label>
+        <input type="text" id="userId" name="userId" placeholder="학번 또는 교번" required>
+
+        <label for="password">비밀번호</label>
+        <input type="password" id="password" name="password" placeholder="비밀번호" required>
+
+        <div class="auto-login">
+            <label for="autoLogin">자동 로그인</label>
+            <input type="checkbox" id="autoLogin" name="autoLogin" disabled>
+        </div>
+
+        <p th:if="${error}" th:text="${error}" style="color:red;"></p>
+
+        <button type="submit" class="login-btn">로그인</button>
+        <button type="button" class="join-btn" onclick="goToJoin()">회원가입</button>
+    </form>
+</div>
+
+<script>
+    function goToJoin() {
+        window.location.href = "/join";
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,242 @@
+
+
+
+/* 헤더 스타일 */
+.navbar-app {
+    font-size: 18px;
+    font-weight: bold;
+    color: #007aff;
+    margin-bottom: 20px;
+}
+
+/* 공지 문구 */
+.notice {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* 버튼 그룹 */
+.button-group {
+    display: flex;
+    margin-bottom: 16px;
+}
+
+.button-group button {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #007aff;
+    background-color: white;
+    color: #007aff;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+    border-radius: 0;
+}
+
+.button-group button:first-child {
+    border-radius: 6px 0 0 6px;
+}
+
+.button-group button:last-child {
+    border-radius: 0 6px 6px 0;
+}
+
+.button-group button.active {
+    background-color: #007aff;
+    color: white;
+}
+
+/* select + label */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+/* 리스트 공통 */
+.section {
+    margin-top: 24px;
+}
+
+.item-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.item-list li {
+    padding: 12px 16px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    user-select: none;
+}
+
+.item-list li:last-child {
+    border-bottom: none;
+}
+
+.item-list li:hover {
+    background-color: #f9f9f9;
+}
+
+.item-list li.active {
+    background-color: #007aff;
+    color: white;
+    font-weight: bold;
+}
+
+/* 좌석 안내 */
+.seat-guide {
+    font-size: 14px;
+    text-align: center;
+    color: #f77b00;
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+/* 운전석 */
+.driver-seat {
+    background-color: #82c9f8;
+    color: white;
+    font-weight: bold;
+    border-radius: 6px;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+    width: 100px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* 일반 좌석 배치 */
+.seat-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.seat-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+/* 프리미엄 좌석 배치 */
+.seat-layout-premium {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.seat-row-premium {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+}
+
+.seat-row-premium .left {
+    display: flex;
+    gap: 10px;
+}
+
+.seat-row-premium .right {
+    display: flex;
+}
+
+/* 마지막 줄 (4석) */
+.seat-row.last-row {
+    justify-content: center;
+    gap: 10px;
+}
+
+/* 좌석 버튼 */
+.seat-btn {
+    width: 50px;
+    height: 38px;
+    border: 1px solid #ccc;
+    background-color: white;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+
+.seat-btn:hover {
+    background-color: #f0f0f0;
+}
+
+.seat-btn.click_active {
+    background-color: #ccc;
+    color: white;
+}
+
+.seat-btn.selected_active {
+    background-color: #007aff;
+    color: white;
+    border-color: #007aff;
+}
+
+.seat-btn.disabled {
+    background-color: #eee;
+    color: #999;
+    cursor: not-allowed;
+}
+
+/* 복도 간격용 placeholder */
+.seat-placeholder {
+    width: 40px;
+    height: 38px;
+    background: transparent;
+    border: none;
+}
+
+/* 예약 버튼 */
+.submit-button-wrapper {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.reserve-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background-color: #007aff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.reserve-btn:hover {
+    background-color: #005ecb;
+}

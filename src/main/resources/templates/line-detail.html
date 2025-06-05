@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+  <meta charset="UTF-8">
+  <title th:text="'노선 상세 - ' + ${line.name}">노선 상세</title>
+
+  <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=c238cad9fda3d9da4d91990d3ebbb7be&autoload=false&libraries=services"></script>
+
+  <style>
+    #map {
+      width: 100%;
+      height: 400px;
+      margin-top: 20px;
+      border: 1px solid #ccc;
+    }
+
+    .arrival-dropdown {
+      margin-top: 6px;
+      font-size: 14px;
+      padding: 4px;
+    }
+  </style>
+</head>
+<body>
+<main layout:fragment="content">
+  <div class="container">
+
+    <!-- 🔽 노선 선택 드롭다운 -->
+    <label for="lineSelect"><strong>노선 선택:</strong></label>
+    <select id="lineSelect" onchange="location.href='/station/' + this.value">
+      <option th:each="l : ${allLines}"
+              th:value="${l.id}"
+              th:text="${l.name}"
+              th:selected="${l.id} == ${line.id}">
+      </option>
+    </select>
+
+    <h2 th:text="'🚌 ' + ${line.name} + ' 정류장 목록'">노선 이름</h2>
+    <p th:text="'배차: ' + ${line.dispatchNumber}">배차 정보</p>
+
+    <ul>
+      <li th:each="ls : ${stops}">
+        <strong th:text="${ls.stop.name}">정류장 이름</strong>
+        <span th:text="'(' + ${#temporals.format(ls.stop.arriveTime, 'HH:mm')} + ' 도착)'">도착 시간</span>
+
+        <!-- 지도 보기 버튼 -->
+        <button type="button"
+                style="margin-left: 10px;"
+                th:attr="data-lat=${ls.stop.latitude}, data-lng=${ls.stop.longitude}, data-name=${ls.stop.name}"
+                onclick="handleMapButtonClick(this)">
+          지도 보기
+        </button>
+
+        <!-- 시간 보기 버튼 -->
+        <button type="button"
+                style="margin-left: 10px;"
+                th:attr="data-times=${stopTimeMap[ls.stop.name]}"
+                onclick="toggleDropdown(this)">
+          시간 보기
+        </button>
+
+        <!-- 드롭다운 (비어 있음, JS에서 채움) -->
+        <select class="arrival-dropdown" style="display: none;"></select>
+      </li>
+      <li th:if="${#lists.isEmpty(stops)}">📭 등록된 정류장이 없습니다.</li>
+    </ul>
+
+    <!-- 지도 영역 -->
+    <div id="map"></div>
+  </div>
+
+  <!-- JS -->
+  <script>
+    kakao.maps.load(function () {
+      let map;
+
+      window.handleMapButtonClick = function (btn) {
+        const lat = parseFloat(btn.getAttribute('data-lat'));
+        const lng = parseFloat(btn.getAttribute('data-lng'));
+        const name = btn.getAttribute('data-name');
+        showMap(lat, lng, name);
+      }
+
+      function showMap(lat, lng, name) {
+        const container = document.getElementById('map');
+        const options = {
+          center: new kakao.maps.LatLng(lat, lng),
+          level: 3
+        };
+
+        map = new kakao.maps.Map(container, options);
+
+        const marker = new kakao.maps.Marker({
+          position: new kakao.maps.LatLng(lat, lng)
+        });
+        marker.setMap(map);
+
+        const infowindow = new kakao.maps.InfoWindow({
+          content: '<div style="padding:5px;">' + name + '</div>'
+        });
+        infowindow.open(map, marker);
+      }
+    });
+
+    // 도착시간 드롭다운 토글
+    function toggleDropdown(button) {
+      const select = button.nextElementSibling;
+      const raw = button.getAttribute('data-times');
+      const times = raw.replaceAll("'", "\"").replace("[", "").replace("]", "").split(", ");
+
+      select.innerHTML = "";
+      times.forEach(time => {
+        const option = document.createElement("option");
+        option.value = time.trim();
+        option.textContent = time.trim();
+        select.appendChild(option);
+      });
+
+      select.style.display = (select.style.display === 'none') ? 'inline-block' : 'none';
+    }
+  </script>
+</main>
+</body>
+</html>

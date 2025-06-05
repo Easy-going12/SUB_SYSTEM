@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title layout:title="공지사항">공지사항</title>
+</head>
+<body>
+<main layout:fragment="content">
+
+    <div class="container">
+        <h2>📢 공지사항</h2>
+
+        <!-- 🔹 글쓰기 버튼 (테스트용 항상 표시, 실제론 관리자만 노출 추천) -->
+        <div style="text-align: right; margin-bottom: 10px;">
+            <a href="/notice/write">
+                <button>공지 작성</button>
+            </a>
+        </div>
+
+        <!-- 🔹 공지 목록 -->
+        <table border="1" width="100%" style="border-collapse: collapse;">
+            <thead>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성일</th>
+                <th>작성자</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="notice, iterStat : ${notices}">
+                <td th:text="${iterStat.count}">1</td>
+                <td>
+                    <a th:href="@{/notice/{id}(id=${notice.noticeId})}"
+                       th:text="${notice.title}">공지 제목</a>
+                </td>
+                <td th:text="${#temporals.format(notice.createdAt, 'yyyy-MM-dd')}">2025-04-17</td>
+                <td th:text="${notice.writer}">관리자</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<div class="container bus-log-container">
+  <h2 class="title">버스 예약내역</h2>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('log')">예약내역</button>
+    <button class="tab" onclick="showTab('history')">히스토리</button>
+  </div>
+
+  <!-- ✅ 예약내역 -->
+  <div id="log-section">
+    <div class="reservation-box">
+      <p class="date-time">
+        <strong>(등교)</strong> 2025-03-25 07:55:00 출발
+      </p>
+      <p class="location">대구(교육관) / 경운대학교 대구교육관</p>
+      <p class="seat">5번 좌석</p>
+    </div>
+    <div class="line"></div>
+    <div class="reservation-box">
+      <p class="date-time">
+        <strong>(하교)</strong> 2025-03-25 08:40:00 출발
+      </p>
+      <p class="location">대구(교육관) / 경운대학교 대구교육관</p>
+      <p class="seat">11번 좌석</p>
+    </div>
+  </div>
+
+  <!-- ✅ 히스토리 -->
+  <div id="history-section" style="display: none;">
+    <div class="history-box">
+      <div class="history-item">
+        <p><strong>(등교)</strong> 예약</p>
+        <p>대구(교육관) / 경운대학교 대구교육관</p>
+        <p>5번 좌석</p>
+        <p class="time">2025-03-24 22:14:13</p>
+      </div>
+      <hr class="divider">
+      <div class="history-item">
+        <p><strong>(하교)</strong> 예약</p>
+        <p>대구(교육관) / 경운대학교 대구교육관</p>
+        <p>28번 좌석</p>
+        <p class="time">2025-03-24 15:19:11</p>
+      </div>
+      <hr class="divider">
+      <div class="history-item">
+        <p><strong>(하교)</strong> 예약</p>
+        <p>대구(교육관) / 경운대학교 대구교육관</p>
+        <p>20번 좌석</p>
+        <p class="time">2025-03-21 16:28:16</p>
+      </div>
+      <hr class="divider">
+      <div class="history-item">
+        <p><strong>(하교)</strong> <span class="cancel">취소</span></p>
+        <p>대구(교육관) / 경운대학교 대구교육관</p>
+        <p>24번 좌석</p>
+        <p class="time">2025-03-21 15:59:17</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+

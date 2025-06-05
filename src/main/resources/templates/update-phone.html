@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>연락처 수정</title>
+    <th:block layout:fragment="head-extra">
+        <link rel="stylesheet" th:href="@{/mypage/mypage.css}">
+    </th:block>
+</head>
+<body>
+<main layout:fragment="content">
+    <div class="container">
+        <h2 class="title">연락처 수정</h2>
+        <form th:action="@{/member/update-phone}" method="post">
+            <p><strong>현재 연락처:</strong> <span th:text="${member.phoneNumber}">010-1234-5678</span></p>
+            <input type="text" name="phoneNumber" placeholder="새 연락처 입력" required>
+            <button class="yellow" type="submit">수정하기</button>
+            <button class="gray" type="button" onclick="history.back()">취소</button>
+        </form>
+    </div>
+</main>
+</body>
+</html>

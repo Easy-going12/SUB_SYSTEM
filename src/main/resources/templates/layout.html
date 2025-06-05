@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title layout:title-pattern="__TITLE__ | 경운대학교">경운대학교</title>
+
+    <!-- 공통 CSS -->
+    <link rel="stylesheet" th:href="@{/layout/layout.css}">
+    <link rel="stylesheet" th:href="@{/notification/notification.css}">
+
+    <!-- 페이지 전용 head 확장 영역 -->
+    <th:block layout:fragment="head-extra"></th:block>
+
+    <!-- 공통 JS -->
+    <script th:src="@{/layout/layout.js}" defer></script>
+    <script th:src="@{/notification/notification.js}" defer></script>
+
+    <!-- ✅ Kakao 지도 API -->
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=c238cad9fda3d9da4d91990d3ebbb7be&libraries=services"></script>
+</head>
+
+<body class="layout-bg">
+
+<!-- 사이드바 -->
+<div id="sidebar">
+    <div class="sidebar-header">
+        <h2 onclick="goToHome()" style="cursor: pointer;">경운대학교</h2>
+        <span class="close-icon" onclick="toggleSidebar()">×</span>
+    </div>
+    <ul>
+        <li id="menu-member">회원정보</li>
+        <li id="menu-messagebox">쪽지함</li>
+        <li id="menu-boarding">탑승내역</li>
+        <li id="menu-bus-reservation">버스예약</li>
+        <li id="menu-bus-log">버스예약내역</li>
+        <li id="menu-station">노선 및 정거장</li>
+        <li id="menu-notice">공지사항</li>
+        <li id="menu-logout" onclick="location.href='/login'">로그아웃</li>
+    </ul>
+</div>
+
+<!-- 햄버거 아이콘 -->
+<div class="menu-icon" onclick="toggleSidebar()">☰</div>
+
+<!-- 메인 콘텐츠 -->
+<main layout:fragment="content" style="position: relative;">
+
+    <!-- ✅ 알림 아이콘 (🔔) 및 팝업 포함 -->
+    <div class="notification-wrapper">
+        <button class="notification-btn" onclick="toggleNotificationPopup()">🔔</button>
+        <div id="notification-popup">
+            <ul id="notification-list"></ul>
+        </div>
+    </div>
+
+    <!-- 페이지 개별 콘텐츠는 여기에 들어감 -->
+</main>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+
+
+/* 상단 타이틀 */
+.title {
+    font-size: 26px;
+    color: #007bff;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+/* 정보 텍스트 */
+.info p {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+/* 연락처 입력창 */
+input[type="text"] {
+    width: 100%;
+    padding: 14px;
+    margin: 20px 0;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+}
+
+/* 버튼 공통 스타일 */
+button {
+    width: 100%;
+    padding: 14px;
+    margin: 12px 0;
+    font-size: 17px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+/* 버튼 색상 개별 지정 */
+.yellow {
+    background-color: #fff176;
+    color: #333;
+}
+
+.blue {
+    background-color: #2196f3;
+    color: #fff;
+}
+
+.red {
+    background-color: #f44336;
+    color: #fff;
+}
+
+button:hover {
+    opacity: 0.9;
+}

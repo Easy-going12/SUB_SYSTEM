@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+  <title layout:title="공지 수정">공지 수정</title>
+</head>
+<body>
+<main layout:fragment="content">
+  <div class="container">
+    <h2>✏️ 공지사항 수정</h2>
+
+    <form th:action="@{'/notice/edit/' + ${notice.noticeId}}" method="post" th:object="${notice}">
+      <label>제목</label><br>
+      <input type="text" th:field="*{title}" required><br><br>
+
+      <label>내용</label><br>
+      <textarea th:field="*{content}" rows="8" required></textarea><br><br>
+
+      <button type="submit">수정 완료</button>
+      <a href="/notice">
+        <button type="button">취소</button>
+      </a>
+    </form>
+  </div>
+</main>
+</body>
+</html>

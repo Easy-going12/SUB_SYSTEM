@@ -1,0 +1,56 @@
+/*탑승내역에 관한 내용*/
+
+.navbar-app {
+    min-height: 50px;
+    background: #f7f7f7;
+    color: #007aff;
+    border-bottom: 1px solid #ccc;               /* 하단 경계선 */
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);     /* 부드러운 그림자 */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 16px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.navbar-brand {
+    font-size: 16px;
+    display: flex;
+    color: #000;
+}
+
+body {
+    margin: 0;
+    padding-top: 50px; /* 네비게이션 바 높이만큼 여백 */
+    font-family: sans-serif;
+}
+
+
+/* 탑승내역 전체를 감싸는 스타일 */
+.boarding-wrapper {
+    max-width: 700px; /* 폭 제한 */
+    margin: 40px auto; /* 수직 여백 + 좌우 중앙 정렬 */
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* 리스트 항목 스타일 */
+.boarding-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.boarding-item {
+    font-size: 15px;
+    color: #333;
+    padding: 10px;
+    border-bottom: 1px solid #f0f0f0;
+    text-align: left;
+}

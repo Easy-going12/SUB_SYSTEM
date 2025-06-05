@@ -1,0 +1,57 @@
+<div class="container">
+    <h2 class="title">게시판 관리</h2>
+    <p class="path">
+        <strong>현재 위치 :</strong>
+        <span>경운대 버스 게시판 관리</span>
+        <span>리스트형</span>
+        <span>글작성</span>
+    </p>
+
+    <form id="saveForm" method="post" autocomplete="off">
+        <div class="form-row">
+            <label for="isNotice">공지글</label>
+            <input type="checkbox" id="isNotice" name="isNotice">
+        </div>
+
+        <div class="form-row">
+            <label for="createdDate">등록일</label>
+            <input type="text" id="createdDate" name="createdDate" readonly>
+        </div>
+
+        <div class="form-row">
+            <label for="title">제목 <span class="required">*</span></label>
+            <input type="text" id="title" name="title" maxlength="50" placeholder="제목을 입력해 주세요.">
+        </div>
+
+        <div class="form-row">
+            <label for="writer">이름 <span class="required">*</span></label>
+            <input type="text" id="writer" name="writer" maxlength="10" placeholder="이름을 입력해 주세요.">
+        </div>
+
+        <div class="form-row">
+            <label for="content">내용 <span class="required">*</span></label>
+            <textarea id="content" name="content" rows="8" placeholder="내용을 입력해 주세요."></textarea>
+        </div>
+    </form>
+
+    <div class="button-group">
+        <button id="saveBtn" type="button">저장</button>
+        <button type="button" onclick="loadHomePage()">뒤로</button>
+    </div>
+</div>
+
+<script>
+    window.onload = () => {
+        document.getElementById('createdDate').value = new Date().toISOString().split('T')[0];
+
+        const saveBtn = document.getElementById("saveBtn");
+        saveBtn.addEventListener("click", () => {
+            alert("임시로 저장되었습니다.");
+            window.location.href = "/Notice_board/Notice_board.html";
+        });
+    };
+
+    function loadHomePage() {
+        window.location.href = "/Notice_board/Notice_board.html";
+    }
+</script>

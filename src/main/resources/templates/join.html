@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <link rel="stylesheet" href="/join/join.css">
+    <script src="/join/join.js" defer></script>
+</head>
+<body>
+
+<div class="join-container">
+    <!-- ✅ 상단 로고 이미지 삽입 -->
+    <div class="logo-box">
+        <img src="/images/kyungwoon_logo.png" alt="경운대학교 로고">
+    </div>
+
+    <form th:action="@{/api/auth/register}" method="post" th:object="${member}" onsubmit="return validateForm();">
+        <label>아이디(학번)</label>
+        <input type="text" th:field="*{userId}" placeholder="예: 201905006" />
+        <div id="idStatus"></div>
+
+        <label>비밀번호</label>
+        <input type="password" th:field="*{password}" placeholder="영문+숫자 포함, 10자 이하" />
+
+        <label>이름</label>
+        <input type="text" th:field="*{name}" />
+
+        <label>전화번호</label>
+        <input type="text" th:field="*{phoneNumber}" placeholder="예: 010-1234-5678" />
+
+        <label>캠퍼스</label>
+        <select th:field="*{campus}">
+            <option value="">-- 캠퍼스를 선택하세요 --</option>
+            <option th:value="경운대학교">경운대학교</option>
+            <option th:value="구미대학교">구미대학교</option>
+            <option th:value="구미혜당학교">구미혜당학교</option>
+            <option th:value="국립금오공과대학교">국립금오공과대학교</option>
+        </select>
+
+        <label>예약 타입</label>
+        <select th:field="*{isReserved}">
+            <option th:value="예약제">예약제</option>
+            <option th:value="비예약제">비예약제</option>
+        </select>
+
+        <input type="hidden" th:field="*{role}" value="USER" />
+
+        <div id="errorMessage"></div>
+
+        <button type="submit">가입하기</button>
+        <button type="button" class="cancel" onclick="location.href='/login'">취소</button>
+    </form>
+</div>
+
+</body>
+</html>

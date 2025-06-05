@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+  <title>쪽지 작성</title>
+</head>
+<body>
+<main layout:fragment="content">
+  <div class="container">
+    <h2>✉️ 쪽지 작성</h2>
+    <form th:action="@{/messagebox/send}" method="post" th:object="${message}">
+      <label>받는 사람 ID</label><br>
+      <input type="text" th:field="*{receiverId}" required><br><br>
+
+      <label>제목</label><br>
+      <input type="text" th:field="*{title}" required><br><br>
+
+      <label>내용</label><br>
+      <textarea th:field="*{content}" rows="8" required></textarea><br><br>
+
+      <button type="submit">보내기</button>
+      <a href="/messagebox"><button type="button">취소</button></a>
+    </form>
+  </div>
+</main>
+</body>
+</html>

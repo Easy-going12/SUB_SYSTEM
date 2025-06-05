@@ -1,0 +1,97 @@
+/* 전체 컨테이너 중앙 배치 */
+.container {
+    max-width: 700px;
+    margin: 40px auto;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* 상단 제목 */
+.title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: #0073e6;
+    margin-bottom: 30px;
+}
+
+/* 탭 버튼 영역 */
+.tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    gap: 10px;
+}
+
+.tab {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    background-color: #e0e0e0;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tab.active {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* 예약내역 (로그) */
+#log-section .reservation-box {
+    background-color: #f9f9f9;
+    padding: 15px 20px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #eee;
+}
+
+.date-time {
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 6px;
+}
+
+.location, .seat {
+    font-size: 14px;
+    color: #555;
+}
+
+.line {
+    height: 1px;
+    background-color: #e0e0e0;
+    margin: 16px 0;
+}
+
+/* 히스토리 */
+#history-section .history-box {
+    padding: 10px;
+    border-radius: 12px;
+}
+
+.history-item {
+    background-color: #f5f5f5;
+    padding: 12px 16px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.history-item p {
+    margin: 4px 0;
+    font-size: 14px;
+    color: #333;
+}
+
+.time {
+    color: gray;
+    font-size: 13px;
+}
+
+.cancel {
+    color: red;
+    font-weight: bold;
+}

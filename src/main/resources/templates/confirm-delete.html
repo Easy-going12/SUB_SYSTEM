@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+  <title>회원탈퇴 확인</title>
+  <script>
+    function confirmDelete(event) {
+      const confirmed = confirm("정말 탈퇴하시겠습니까?");
+      if (!confirmed) {
+        event.preventDefault(); // 폼 제출 막기
+        window.location.href = "/member/mypage"; // 아니요 선택 시 마이페이지로 이동
+      }
+    }
+  </script>
+</head>
+<body>
+<main layout:fragment="content">
+  <div class="container">
+    <h2>❌ 회원탈퇴 확인</h2>
+    <form th:action="@{/member/delete}" method="post" onsubmit="confirmDelete(event)">
+      <label>비밀번호 입력</label><br>
+      <input type="password" name="password" required><br><br>
+      <button type="submit">회원탈퇴</button>
+      <a href="/member/mypage"><button type="button">취소</button></a>
+    </form>
+    <p th:if="${error}" th:text="${error}" style="color:red;"></p>
+  </div>
+</main>
+</body>
+</html>

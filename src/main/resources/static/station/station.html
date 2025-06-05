@@ -1,0 +1,166 @@
+<div class="container">
+  <h2 class="title">경운대학교</h2>
+
+  <ul class="station-list">
+    <!-- 구미(구미시청) -->
+    <li class="clickable" onclick="toggleSubStops('gumi1')">
+      구미(구미시청) <span class="arrow">▶</span>
+    </li>
+    <ul class="sub-stop-list" id="gumi1">
+      <li>
+        <div class="station-info">
+          <div class="station-name">구미시청</div>
+          <div class="sub-label">-버스정류장-</div>
+        </div>
+        <span class="pin">📍</span>
+      </li>
+      <li>
+        <div class="station-info">
+          <div class="station-name">도량4주공 앞</div>
+          <div class="sub-label">-버스정류장-</div>
+        </div>
+        <span class="pin">📍</span>
+      </li>
+    </ul>
+
+    <!-- 구미(구미역) -->
+    <li class="clickable" onclick="toggleSubStops('gumi2')">
+      구미(구미역) <span class="arrow">▶</span>
+    </li>
+    <ul class="sub-stop-list" id="gumi2">
+      <li>
+        <div class="station-info">
+          <div class="station-name">구미역(코오롱스포츠 구미원평점)</div>
+          <div class="sub-label">-구미역 앞-</div>
+        </div>
+        <span class="pin">📍</span>
+      </li>
+      <li>
+        <div class="station-info">
+          <div class="station-name">구미제일고등학교 건너</div>
+          <div class="sub-label">-건너편 버스정류장-</div>
+        </div>
+        <span class="pin">📍</span>
+      </li>
+      <li>
+        <div class="station-info">
+          <div class="station-name">문성3리</div>
+          <div class="sub-label">-버스정류장-</div>
+        </div>
+        <span class="pin">📍</span>
+      </li>
+      <li>
+        <div class="station-info">
+          <div class="station-name">삼우힐아파트</div>
+          <div class="sub-label">-버스정류장-</div>
+        </div>
+        <span class="pin">📍</span>
+      </li>
+    </ul>
+
+    <!-- 구미(봉곡1) -->
+    <li class="clickable" onclick="toggleSubStops('gumi3')">
+      구미(봉곡1) <span class="arrow">▶</span>
+    </li>
+    <ul class="sub-stop-list" id="gumi3">
+      <li>
+        <div class="station-info">
+          <div class="station-name">봉곡축산식육도소매 앞</div>
+          <div class="sub-label">-버스정류장-</div>
+        </div>
+        <span class="pin">📍</span>
+      </li>
+      <li>
+        <div class="station-info">
+          <div class="station-name">대구은행 봉곡지점</div>
+          <div class="sub-label">-대구은행 봉곡지점 건너 과방-</div>
+        </div>
+        <span class="pin">📍</span>
+      </li>
+      <li>
+        <div class="station-info">
+          <div class="station-name">봉곡현대아파트 앞 버스정류장</div>
+          <div class="sub-label">-버스정류장-</div>
+        </div>
+        <span class="pin">📍</span>
+      </li>
+      <li>
+        <div class="station-info">
+          <div class="station-name">원호삼거리 산호횟집</div>
+          <div class="sub-label">-버스정류장-</div>
+        </div>
+        <span class="pin">📍</span>
+      </li>
+    </ul>
+
+    <!-- 구미(봉곡2) -->
+    <li class="clickable" onclick="toggleSubStops('gumi4')">
+      구미(봉곡2) <span class="arrow">▶</span>
+    </li>
+    <ul class="sub-stop-list" id="gumi4">
+      <li>
+        <div class="station-info">
+          <div class="station-name">봉곡현대아파트 앞 버스정류장</div>
+          <div class="sub-label">-버스정류장-</div>
+        </div>
+        <span class="pin">📍</span>
+      </li>
+      <li>
+        <div class="station-info">
+          <div class="station-name">대구은행 봉곡지점</div>
+          <div class="sub-label">-건너 과방-</div>
+        </div>
+        <span class="pin">📍</span>
+      </li>
+      <li>
+        <div class="station-info">
+          <div class="station-name">원호삼거리 산호횟집</div>
+          <div class="sub-label">-버스정류장-</div>
+        </div>
+        <span class="pin">📍</span>
+      </li>
+    </ul>
+
+    <!-- 구미(인동) -->
+    <li class="clickable" onclick="toggleSubStops('gumi5')">
+      구미(인동) <span class="arrow">▶</span>
+    </li>
+    <ul class="sub-stop-list" id="gumi5">
+      <li>
+        <div class="station-info">
+          <div class="station-name">인동차고지</div>
+          <div class="sub-label">-버스정류장-</div>
+        </div>
+        <span class="pin">📍</span>
+      </li>
+      <li>
+        <div class="station-info">
+          <div class="station-name">구포동</div>
+          <div class="sub-label">-4공단입구-</div>
+        </div>
+        <span class="pin">📍</span>
+      </li>
+      <li>
+        <div class="station-info">
+          <div class="station-name">중흥S클래스</div>
+          <div class="sub-label">-버스정류장-</div>
+        </div>
+        <span class="pin">📍</span>
+      </li>
+      <li>
+        <div class="station-info">
+          <div class="station-name">신당2리</div>
+          <div class="sub-label">-버스정류장-</div>
+        </div>
+        <span class="pin">📍</span>
+      </li>
+    </ul>
+  </ul>
+</div>
+
+<script>
+  function toggleSubStops(id) {
+    const el = document.getElementById(id);
+    el.style.display = el.style.display === "none" ? "block" : "none";
+  }
+</script>

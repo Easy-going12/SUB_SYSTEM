@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>홈</title>
+
+    <!-- 🔔 알림 CSS -->
+    <link rel="stylesheet" th:href="@{/Notification/notification.css}"/>
+
+    <!-- ✅ 알림 사용자 ID 전역 등록 (수정됨) -->
+    <script th:inline="javascript">
+        window.currentUserId = /*[[${session.userId}]]*/ "guest";
+    </script>
+
+    <!-- 🔔 알림 JS -->
+    <script th:src="@{/Notification/notification.js}" defer></script>
+</head>
+<body>
+<main layout:fragment="content">
+
+    <div class="notification-wrapper">
+        <button class="notification-btn" onclick="toggleNotificationPopup()">🔔</button>
+        <div id="notification-popup">
+            <ul id="notification-list">
+            </ul>
+        </div>
+    </div>
+
+    <section class="info">
+        <h2>학기권 : 대구(교육관)</h2>
+        <p>안녕하세요, <span th:text="${name}">사용자</span>님!</p>
+    </section>
+
+    <section class="buttons">
+        <button>📑 학기권 신청</button>
+        <button>📅 버스 예약</button>
+    </section>
+
+    <section class="qr">
+        <h3 onclick="openQRModal()" style="cursor: pointer;">📱 모바일승차권 QR</h3>
+    </section>
+
+    <div id="qrModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeQRModal()">×</span>
+            <h2>모바일 승차권(QR)</h2>
+            <img th:src="'data:image/png;base64,' + ${qrCode}" alt="QR 코드" width="200" />
+            <p>만료 : 2025-03-26 18:07:50<br>만료 이전까지만 사용 가능합니다.</p>
+            <button class="modal-close-button" onclick="closeQRModal()">닫기</button>
+        </div>
+    </div>
+
+    <!-- ✅ 최근 쪽지 -->
+    <section class="notices">
+        <h3>최근 쪽지</h3>
+        <ul>
+            <li th:each="msg : ${recentMessages}">
+                <a th:href="@{'/messagebox/view/' + ${msg.messageId}}" th:text="${msg.title}">쪽지 제목</a>
+                <span th:text="${#temporals.format(msg.sentAt, 'MM/dd HH:mm')}" style="margin-left: 10px; color: gray;">날짜</span>
+            </li>
+            <li th:if="${#lists.isEmpty(recentMessages)}">
+                📭 받은 쪽지가 없습니다.
+            </li>
+        </ul>
+    </section>
+
+    <!-- ✅ 공지사항 -->
+    <section class="announcements">
+        <h3>공지사항</h3>
+        <ul>
+            <li th:each="notice : ${recentNotices}">
+                <a th:href="@{/notice/{id}(id=${notice.noticeId})}" th:text="${notice.title}">
+                    공지 제목
+                </a>
+            </li>
+            <li th:if="${#lists.isEmpty(recentNotices)}">
+                📭 등록된 공지사항이 없습니다.
+            </li>
+        </ul>
+    </section>
+
+</main>
+</body>
+</html>

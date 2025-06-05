@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+  <title>쪽지함</title>
+</head>
+<body>
+<main layout:fragment="content">
+  <div class="container">
+    <h2>📥 받은 쪽지함</h2>
+    <a href="/messagebox/send"><button>쪽지 작성</button></a>
+
+    <table>
+      <thead>
+      <tr>
+        <th>번호</th>
+        <th>보낸 사람</th>
+        <th>제목</th>
+        <th>읽음 여부</th>
+        <th>보낸 날짜</th>
+        <th>삭제</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="msg, stat : ${messages}">
+        <td th:text="${stat.count}">1</td>
+        <td th:text="${msg.senderId}">admin</td>
+        <td>
+          <a th:href="@{'/messagebox/view/' + ${msg.messageId}}" th:text="${msg.title}">제목</a>
+        </td>
+        <td th:text="${msg.read ? '읽음' : '안 읽음'}">읽음</td>
+        <td th:text="${#temporals.format(msg.sentAt, 'yyyy-MM-dd HH:mm')}">날짜</td>
+        <td>
+          <form th:action="@{'/messagebox/delete/' + ${msg.messageId}}" method="post" onsubmit="return confirm('정말 삭제하시겠습니까?');">
+            <button type="submit">삭제</button>
+          </form>
+        </td>
+      </tr>
+      <tr th:if="${#lists.isEmpty(messages)}">
+        <td colspan="6">📭 받은 쪽지가 없습니다.</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</main>
+</body>
+</html>

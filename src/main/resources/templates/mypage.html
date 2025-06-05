@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+  <title>회원정보</title>
+  <th:block layout:fragment="head-extra">
+    <link rel="stylesheet" th:href="@{/mypage/mypage.css}">
+  </th:block>
+</head>
+<body>
+<main layout:fragment="content">
+  <div class="container">
+    <h2 class="title">회원정보</h2>
+    <div class="info">
+      <p><strong>구분 :</strong> 학생</p>
+      <p><strong>이름 :</strong> <span th:text="${member.name}">홍길동</span></p>
+      <p><strong>연락처 :</strong> <span th:text="${member.phoneNumber}">010-1234-5678</span></p>
+      <p><strong>학기권 :</strong> <span th:text="${member.campus}">대구(교육관)</span> (<span th:text="${member.isReserved}">예약제</span>)</p>
+    </div>
+
+    <!-- 연락처 수정 버튼: 별도 페이지로 이동 -->
+    <button class="yellow" onclick="location.href='/member/update-phone'">연락처 수정</button>
+
+    <button class="blue" onclick="location.href='/member/change-password'">비밀번호 변경</button>
+
+    <!-- ✅ 회원탈퇴 요청 (JS 확인은 다음 페이지에서 처리) -->
+    <form th:action="@{/member/confirm-delete}" method="get" style="display:inline;">
+      <button class="red" type="submit">회원탈퇴 요청</button>
+    </form>
+  </div>
+</main>
+</body>
+</html>

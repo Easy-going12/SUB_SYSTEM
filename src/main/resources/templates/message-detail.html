@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+  <title>쪽지 상세</title>
+</head>
+<body>
+<main layout:fragment="content">
+  <div class="container">
+    <h2>📨 쪽지 상세</h2>
+
+    <div class="message-detail">
+      <p><strong>보낸 사람:</strong> <span th:text="${message.senderId}">보낸사람</span></p>
+      <p><strong>받은 시간:</strong> <span th:text="${#temporals.format(message.sentAt, 'yyyy-MM-dd HH:mm')}">시간</span></p>
+      <p><strong>제목:</strong> <span th:text="${message.title}">제목</span></p>
+      <hr>
+      <p th:text="${message.content}" style="white-space: pre-line;">내용</p>
+    </div>
+
+    <div style="margin-top: 20px;">
+      <a href="/messagebox"><button>📥 목록으로</button></a>
+      <form th:action="@{'/messagebox/delete/' + ${message.messageId}}" method="post" style="display:inline;" onsubmit="return confirm('삭제하시겠습니까?');">
+        <button type="submit">🗑 삭제</button>
+      </form>
+    </div>
+  </div>
+</main>
+</body>
+</html>

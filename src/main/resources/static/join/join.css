@@ -1,0 +1,111 @@
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('/images/kyungwoon_campus.png') no-repeat center center fixed;
+    background-size: cover;
+}
+
+/* 회원가입 박스 */
+.join-container {
+    background-color: rgba(255, 255, 255, 0.92);  /* ✅ 반투명 배경 */
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    width: 100%;
+    max-width: 420px;
+    z-index: 2;
+}
+
+/* 로고 박스 */
+.logo-box {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.logo-box img {
+    width: 120px;
+    height: auto;
+}
+
+/* 폼 전체 */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 6px;
+    font-weight: bold;
+    color: #333;
+    font-size: 14px;
+}
+
+input, select {
+    padding: 10px;
+    font-size: 14px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+}
+
+input:focus, select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+}
+
+button {
+    padding: 12px;
+    font-size: 15px;
+    border: none;
+    border-radius: 6px;
+    margin-top: 8px;
+    cursor: pointer;
+}
+
+button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+button.cancel {
+    background-color: #28a745;
+    color: white;
+}
+
+button.cancel:hover {
+    background-color: #218838;
+}
+
+#idStatus, #errorMessage {
+    font-size: 13px;
+    color: red;
+    margin-top: -10px;
+    margin-bottom: 12px;
+}
+
+@media (max-width: 480px) {
+    .join-container {
+        padding: 20px;
+        border-radius: 12px;
+    }
+
+    input, select {
+        font-size: 13px;
+        padding: 8px;
+    }
+
+    button {
+        font-size: 14px;
+        padding: 10px;
+    }
+}

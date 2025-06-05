@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+
+<head>
+    <title>버스 예약</title>
+    <th:block layout:fragment="head-extra">
+        <link rel="stylesheet" th:href="@{/reservation/reservation.css}">
+    </th:block>
+</head>
+
+<body>
+<main layout:fragment="content">
+    <div class="reservation-container">
+        <div class="navbar navbar-app">
+            <div class="navbar-brand">
+                <span class="navbar-app">경운대학교</span>
+            </div>
+        </div>
+
+        <div class="notice">
+            * 학기권을 신청 및 신청시 예약제 선택시 차량 예약이 가능합니다.
+        </div>
+
+        <div class="content-wrapper">
+            <!-- 등교/하교 선택 -->
+            <div class="button-group">
+                <button type="button" onclick="selectMode('등교', this)">등교</button>
+                <button type="button" onclick="selectMode('하교', this)">하교</button>
+            </div>
+
+            <!-- 노선 선택 -->
+            <div class="form-group">
+                <label>노선 선택</label>
+                <select class="form-control" id="routeSelect">
+                    <option value="">노선 선택</option>
+                </select>
+            </div>
+
+            <!-- 차트 영역 추가 -->
+            <div id="chartContainer" style="display: none; margin-bottom: 20px;">
+                <canvas id="busChart" width="900" height="400"></canvas>
+            </div>
+
+            <!-- 출발 시간 선택 -->
+            <div class="section">
+                <label class="fw-bold">출발시간 선택</label>
+                <ul id="departureList" class="item-list"></ul>
+            </div>
+
+            <!-- 정류장 선택 -->
+            <div id="stationSection" class="section" style="display: none;">
+                <label class="fw-bold">승/하차 정류장 선택</label>
+                <ul id="stationList" class="item-list"></ul>
+            </div>
+
+            <!-- 좌석 선택 -->
+            <div id="seatSection" style="display: none;">
+                <p class="seat-guide">
+                    * 차량내 좌석번호가 상이할 경우 안내된<br>
+                    좌석배치도 순으로 승차바랍니다.
+                </p>
+
+                <div class="driver-seat">운전석</div>
+
+                <div class="seat-layout"></div>
+            </div>
+
+            <!-- 예약 버튼 -->
+            <div class="submit-button-wrapper">
+                <form id="reservationForm" method="post" th:action="@{/reservation/submit}">
+                    <input type="hidden" name="reservationType" id="reservationType">
+                    <input type="hidden" name="seatNumber" id="seatNumber">
+                    <input type="hidden" name="lineId" id="lineId">
+                    <input type="hidden" name="departureTimeId" id="departureTimeId">
+                    <input type="hidden" name="stopId" id="stopId">
+                    <button type="submit" class="reserve-btn">예약 하기</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script th:src="@{/reservation/reservation.js}" defer></script>
+</main>
+</body>
+</html>

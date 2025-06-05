@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>예약 내역</title>
+    <th:block layout:fragment="head-extra">
+        <link rel="stylesheet" th:href="@{/reservation/reservation-history.css}">
+    </th:block>
+</head>
+<body>
+<main layout:fragment="content">
+    <div class="container">
+        <h2>예약 내역</h2>
+
+        <!-- 예약 내역 없을 때 -->
+        <div th:if="${#lists.isEmpty(reservations)}">예약 내역이 없습니다.</div>
+
+        <!-- 예약 내역 있을 때 -->
+        <table th:if="${!#lists.isEmpty(reservations)}"
+               border="1"
+               style="width:100%; border-collapse: collapse; text-align: center;">
+            <thead>
+            <tr>
+                <th>노선</th>
+                <th>출발 시간</th>
+                <th>정류장</th>
+                <th>좌석</th>
+                <th>예약 상태</th>
+                <th>예약일시</th>
+                <th>취소</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="r : ${reservations}">
+                <td th:text="${r.line.name}">노선</td>
+                <td th:text="${#dates.format(r.departureTime.departure, 'HH:mm')}">출발시간</td>
+                <td th:text="${r.stop.name}">정류장</td>
+                <td th:text="${r.seat.seatNumber}">좌석</td>
+                <td th:text="${r.reservationStatus}">상태</td>
+                <td th:text="${#dates.format(r.reservedAt, 'yyyy-MM-dd HH:mm')}">예약일시</td>
+                <td>
+                    <form th:action="@{/bus/cancel}" method="post" th:if="${r.reservationStatus == '예약완료'}">
+                        <input type="hidden" name="id" th:value="${r.id}">
+                        <button type="submit" class="cancel-btn">취소</button>
+                    </form>
+                    <span th:if="${r.reservationStatus != '예약완료'}">-</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+</body>
+</html>

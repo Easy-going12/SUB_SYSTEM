@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+  <title>노선 및 정류장 조회</title>
+</head>
+<body>
+<main layout:fragment="content">
+  <div class="container">
+    <h2>🚌 노선 및 정류장 조회</h2>
+
+    <!-- ✅ 지역 필터 선택 -->
+    <div class="region-buttons" style="margin-bottom: 20px;">
+      <a th:href="@{/station(region='구미')}"><button>구미</button></a>
+      <a th:href="@{/station(region='대구')}"><button>대구</button></a>
+      <a th:href="@{/station}"><button>전체 보기</button></a>
+    </div>
+
+    <!-- ✅ 선택된 지역 표시 -->
+    <div th:if="${selectedRegion}">
+      <p><strong th:text="'[' + ${selectedRegion} + ']'">지역</strong> 노선을 조회 중입니다.</p>
+    </div>
+
+    <!-- ✅ 노선 리스트 -->
+    <ul>
+      <li th:each="line : ${lines}">
+        <a th:href="@{'/station/' + ${line.id}}">
+          <strong th:text="${line.name}">노선명</strong> -
+          <span th:text="'배차: ' + ${line.dispatchNumber}">배차</span>
+        </a>
+      </li>
+      <li th:if="${#lists.isEmpty(lines)}">📭 해당 지역에는 노선이 없습니다.</li>
+    </ul>
+  </div>
+</main>
+</body>
+</html>
