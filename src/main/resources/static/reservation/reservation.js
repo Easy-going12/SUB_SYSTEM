@@ -49,11 +49,22 @@ document.getElementById('routeSelect').addEventListener('change', function () {
     const type = document.getElementById("reservationType").value;
     setHiddenInput("lineId", lineId);
 
+    // ✅ lineId가 '5'이면 차트 표시
     if (lineId === '5') {
-        document.getElementById('chartContainer').style.display = 'block';
-        renderSelectedChartByLineId(lineId);  // ✅ lineId만 전달
-    } else {
-        document.getElementById('chartContainer').style.display = 'none';
+        chartContainer.style.display = 'block';
+
+        // ✅ 버튼 상태 초기화
+        document.querySelectorAll('.chart-toggle-group button').forEach(btn => btn.classList.remove('active'));
+
+        // ✅ 시간대별 버튼 활성화
+        const timeButton = document.querySelector('.chart-toggle-group button[onclick*="time"]');
+        if (timeButton) timeButton.classList.add('active');
+
+        // ✅ 요일 필터 감춤
+        const weekdayFilter = document.querySelector('.weekday-filter');
+        if (weekdayFilter) weekdayFilter.style.display = 'none';
+
+        renderSelectedChartByLineId(lineId);
     }
 
     const listContainer = document.getElementById('departureList');
@@ -224,8 +235,11 @@ if (form) {
     });
 }
 
+//시간대별 평균 예약자 수 그래프
 function renderSelectedChartByLineId(lineId) {
-    fetch(`/api/reservations/chart/line?lineId=${lineId}`)
+    const type = document.getElementById("reservationType").value; // ✅ 등교 or 하교 가져오기
+
+    fetch(`/api/reservations/chart/line?lineId=${lineId}&type=${type}`)
         .then(res => res.json())
         .then(data => {
             if (!Array.isArray(data)) {
@@ -234,7 +248,7 @@ function renderSelectedChartByLineId(lineId) {
             }
 
             const labels = data.map(d => d.time);
-            const values = data.map(d => Math.round(d.avg_reserved_count));
+            const values = data.map(d => d.avg_reserved_count);  // ✅ 평균값 그대로 사용
 
             const ctx = document.getElementById('busChart').getContext('2d');
             if (window.currentChart) window.currentChart.destroy();
@@ -244,7 +258,7 @@ function renderSelectedChartByLineId(lineId) {
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: '시간대별 평균 예약자 수',
+                        label: `시간대별 평균 예약자 수 (${type})`,  // ✅ 등교/하교 반영
                         data: values,
                         backgroundColor: 'rgba(75, 192, 192, 0.6)',
                         borderColor: 'rgba(75, 192, 192, 1)',
@@ -259,17 +273,181 @@ function renderSelectedChartByLineId(lineId) {
                             title: { display: true, text: '평균 인원 수' }
                         },
                         x: {
-                            title: { display: true, text: '시간대' }
+                            title: { display: true, text: '출발 시간' }
                         }
                     },
                     plugins: {
                         title: {
                             display: true,
-                            text: '시간대별 평균 예약자 수',
+                            text: `시간대별 평균 예약자 수 (${type})`,  // ✅ 그래프 제목에도 반영
                             font: { size: 16 }
                         }
                     }
                 }
             });
         });
+}
+
+// 요일별 평균 예약자 수 그래프
+function renderWeekdayChartByLineId(lineId) {
+    const type = document.getElementById("reservationType").value;
+
+    fetch(`/api/reservations/chart/weekday?lineId=${lineId}&type=${type}`)
+        .then(res => res.json())
+        .then(rawData => {
+            const weekdays = ['월', '화', '수', '목', '금'];
+            const timeSet = new Set();
+            const grouped = {};
+
+            // Step 1: 시간별로 요일별 데이터 정리
+            rawData.forEach(({ time, weekday, avg_reservations }) => {
+                timeSet.add(time);
+                if (!grouped[time]) grouped[time] = {};
+                grouped[time][weekday] = avg_reservations;
+            });
+
+            const sortedTimes = Array.from(timeSet).sort(); // 출발 시간 정렬
+            const datasets = weekdays.map((day, idx) => ({
+                label: `${day}요일`,
+                data: sortedTimes.map(time => grouped[time]?.[day] ?? 0),
+                backgroundColor: `rgba(${255 - idx * 40}, ${150 + idx * 20}, ${200 - idx * 20}, 0.6)`,
+                borderColor: `rgba(${255 - idx * 40}, ${150 + idx * 20}, ${200 - idx * 20}, 1)`,
+                borderWidth: 1
+            }));
+
+            const ctx = document.getElementById('busChart').getContext('2d');
+            if (window.currentChart) window.currentChart.destroy();
+
+            window.currentChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: sortedTimes,
+                    datasets: datasets
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: '평균 인원 수' },
+                            max: 44
+                        },
+                        x: {
+                            title: { display: true, text: '출발 시간' }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: `요일별 평균 예약자 수 (${type})`,
+                            font: { size: 16 }
+                        },
+                        tooltip: { mode: 'index', intersect: false }
+                    }
+                }
+            });
+        });
+}
+
+
+// ✅ 요일별 버튼 클릭 시 해당 요일만 필터링된 요일별 평균 예약자 수 표시
+function filterWeekdayChart(weekday, buttonElement) {
+    document.querySelectorAll('.weekday-filter button').forEach(btn => btn.classList.remove('active'));
+    buttonElement.classList.add('active');
+
+    const lineId = document.getElementById("lineId").value;
+    const type = document.getElementById("reservationType").value;
+
+    fetch(`/api/reservations/chart/weekday?lineId=${lineId}&type=${type}&weekday=${weekday}`)
+        .then(res => res.json())
+        .then(rawData => {
+            const timeSet = new Set();
+            const grouped = {};
+
+            rawData.forEach(({ time, weekday, avg_reservations }) => {
+                timeSet.add(time);
+                if (!grouped[time]) grouped[time] = {};
+                grouped[time][weekday] = avg_reservations;
+            });
+
+            const sortedTimes = Array.from(timeSet).sort();
+
+            const dataset = {
+                label: `${weekday}요일`,
+                data: sortedTimes.map(time => grouped[time]?.[weekday] ?? 0),
+                backgroundColor: 'rgba(255, 159, 64, 0.6)',
+                borderColor: 'rgba(255, 159, 64, 1)',
+                borderWidth: 1
+            };
+
+            const ctx = document.getElementById('busChart').getContext('2d');
+            if (window.currentChart) window.currentChart.destroy();
+
+            window.currentChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: sortedTimes,
+                    datasets: [dataset]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: { display: true, text: '평균 인원 수' },
+                            max: 44
+                        },
+                        x: {
+                            title: { display: true, text: '출발 시간' }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: `${weekday}요일 시간대별 평균 예약자 수 (${type})`,
+                            font: { size: 16 }
+                        },
+                        tooltip: { mode: 'index', intersect: false }
+                    }
+                }
+            });
+        });
+}
+
+// 시간대별, 요일별 버튼 호출
+function switchChart(mode, buttonElement) {
+    const lineId = document.getElementById("lineId").value;
+
+    document.querySelectorAll('.chart-toggle-group button').forEach(btn => btn.classList.remove('active'));
+    buttonElement.classList.add('active');
+
+    const weekdayFilter = document.querySelector('.weekday-filter');
+
+    if (mode === 'time') {
+        renderSelectedChartByLineId(lineId);
+        if (weekdayFilter) weekdayFilter.style.display = 'none';
+    } else {
+        if (weekdayFilter) weekdayFilter.style.display = 'flex';
+
+        // ✅ 오늘 요일에 해당하는 한글 (월~금)
+        const today = new Date().getDay(); // 일=0, 월=1, ..., 토=6
+        let koreanDay = '';
+
+        if (today >= 1 && today <= 5) {
+            koreanDay = ['월', '화', '수', '목', '금'][today - 1];
+        } else if (today === 6) {
+            koreanDay = '금'; // 토요일이면 금요일 그래프로 보여주기
+        } else if (today === 0) {
+            koreanDay = '월'; // 일요일이면 월요일 그래프로 보여주기
+        }
+
+        const weekdayButtons = document.querySelectorAll('.weekday-filter button');
+        weekdayButtons.forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.textContent.trim() === koreanDay) {
+                btn.classList.add('active');
+                filterWeekdayChart(koreanDay, btn); // ✅ 선택된 요일 필터로 차트 렌더링
+            }
+        });
+    }
 }

@@ -42,7 +42,21 @@
 
             <!-- 차트 영역 추가 -->
             <div id="chartContainer" style="display: none; margin-bottom: 20px;">
+                <div class="button-group chart-toggle-group" style="text-align: right; justify-content: flex-end; margin-bottom: 5px;">
+                    <button type="button" onclick="switchChart('time', this)">시간대별</button>
+                    <button type="button" onclick="switchChart('weekday', this)">요일별</button>
+                </div>
+
                 <canvas id="busChart" width="900" height="400"></canvas>
+
+                <!-- ✅ 요일 필터 버튼 (요일별 그래프에서만 사용됨) -->
+                <div class="button-group weekday-filter" style="display: none; justify-content: center; margin-top: 10px; gap: 4px;">
+                    <button type="button" onclick="filterWeekdayChart('월', this)">월</button>
+                    <button type="button" onclick="filterWeekdayChart('화', this)">화</button>
+                    <button type="button" onclick="filterWeekdayChart('수', this)">수</button>
+                    <button type="button" onclick="filterWeekdayChart('목', this)">목</button>
+                    <button type="button" onclick="filterWeekdayChart('금', this)">금</button>
+                </div>
             </div>
 
             <!-- 출발 시간 선택 -->

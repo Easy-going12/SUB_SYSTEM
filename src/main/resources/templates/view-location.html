@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>버스 위치 보기</title>
+    <th:block layout:fragment="head-extra">
+        <style>
+            #map {
+                width: 100%;
+                height: 400px;
+                margin-top: 20px;
+                border: 1px solid #ccc;
+            }
+        </style>
+    </th:block>
+</head>
+<body>
+<main layout:fragment="content">
+    <h2>📍 버스 위치 보기</h2>
+    <div id="map">지도를 불러오는 중...</div>
+
+    <script>
+        let map;
+        let marker;
+        let infowindow;
+
+        kakao.maps.load(function () {
+            // 초기 지도 중심: 서울 시청
+            const defaultCenter = new kakao.maps.LatLng(37.5665, 126.9780);
+
+            map = new kakao.maps.Map(document.getElementById('map'), {
+                center: defaultCenter,
+                level: 4
+            });
+
+            updateMarker();
+            setInterval(updateMarker, 2000); // ✅ 2초마다 최신 위치 요청
+        });
+
+        function updateMarker() {
+            fetch('/api/location/latest')
+                .then(res => res.json())
+                .then(data => {
+                    if (!data || typeof data.lat !== 'number' || typeof data.lng !== 'number') {
+                        console.warn("위치 정보가 없습니다.");
+                        return;
+                    }
+
+                    const latlng = new kakao.maps.LatLng(data.lat, data.lng);
+
+                    if (!marker) {
+                        marker = new kakao.maps.Marker({
+                            map: map,
+                            position: latlng
+                        });
+
+                        infowindow = new kakao.maps.InfoWindow({
+                            content: '<div style="padding:5px;">📍 버스 현재 위치</div>'
+                        });
+
+                        infowindow.open(map, marker);
+                    } else {
+                        marker.setPosition(latlng);
+                        infowindow.setPosition(latlng);
+                    }
+
+                    map.setCenter(latlng);
+                })
+                .catch(err => {
+                    console.error("위치 요청 실패:", err);
+                });
+        }
+    </script>
+</main>
+</body>
+</html>

@@ -240,3 +240,39 @@
 .reserve-btn:hover {
     background-color: #005ecb;
 }
+
+/* 차트 토글 버튼 그룹(시간대별/요일별 버튼) */
+.chart-toggle-group button {
+    flex: none;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: bold;
+    border: 1px solid #007aff;
+    background-color: white;
+    color: #007aff;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.chart-toggle-group button.active {
+    background-color: #007aff;
+    color: white;
+}
+
+/* ✅ 요일(월, 화, 수, 목, 금) 버튼 스타일 (비활성 상태) */
+.button-group button.active {
+    background-color: #007bff;
+    color: white;
+    border: 1px solid #007bff;
+}
+
+/* ✅ 활성화된 요일(월, 화, 수, 목, 금)  버튼 스타일 (선택된 상태) */
+.button-group button {
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    background-color: white;
+    color: black;
+    border-radius: 4px;
+    cursor: pointer;
+}
