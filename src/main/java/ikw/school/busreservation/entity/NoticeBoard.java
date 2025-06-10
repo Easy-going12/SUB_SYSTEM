@@ -28,4 +28,8 @@ public class NoticeBoard {
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
     }
+
+    // NoticeBoardControllerTest 테스트용 코드
+    public void setId(int i) {
+    }
 }

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
@@ -13,7 +14,7 @@
     <li th:each="log : ${qrLogs}">
       <span th:text="${log.parsedDisplayText}">탑승내역 출력</span>
 
-      <!-- 삭제 버튼 폼 -->
+      //삭제 버튼 폼
       <form th:action="@{/boarding/delete/{id}(id=${log.id})}" method="post" style="display:inline;">
         <button type="submit" onclick="return confirm('정말 삭제하시겠습니까?')"
                 style="background-color: #e74c3c; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer;">
@@ -29,3 +30,20 @@
 </main>
 </body>
 </html>
+
+
+<!-- QRLogControllerTest 테스트용 코드
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>테스트용 탑승 내역</title>
+</head>
+<body>
+<h1>탑승 내역</h1>
+<ul>
+  <li th:each="log : ${qrLogs}" th:text="${log.qrText}">샘플 QR 내용</li>
+</ul>
+</body>
+</html>
+-->
+

@@ -88,4 +88,12 @@ public class Notification {
     public void setCategory(String category) {
         this.category = category;
     }
+
+    // NOtificationControllerTest 테스트용 코드
+    public void setId(long l) {
+    }
+
+    // NOtificationControllerTest 테스트용 코드
+    public void setMessage(String 테스트_알림) {
+    }
 }

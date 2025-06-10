@@ -24,6 +24,8 @@ public class QRLog {
     @Setter
     private LocalDateTime scanTime;
 
+    private String userId;
+
     // ✅ QR 텍스트를 해석하여 사용자에게 보여줄 문자열 생성
     public String getParsedDisplayText() {
         Map<String, String> params = parseQRText(qrText);
@@ -60,6 +62,14 @@ public class QRLog {
             }
         }
         return map;
+    }
+
+    // QRLogControllerTest 테스트용 코드
+    public void setId(long l) {
+    }
+
+    // QRLogControllerTest 테스트용 코드
+    public void setUserId(String user123) {
     }
 }
 

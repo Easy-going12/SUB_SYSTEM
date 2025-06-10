@@ -22,4 +22,9 @@ public class MessageBox {
     private boolean isRead;     // 읽음 여부
 
     private LocalDateTime sentAt;  // 보낸 시간
+
+
+    // MessageBoxControllerTest 테스트용
+    public void setId(int i) {
+    }
 }
